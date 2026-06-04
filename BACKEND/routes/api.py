@@ -1,6 +1,12 @@
 from flask import Blueprint
-from app.controllers.UserController import index
+from app.controllers.AuthController import register, login, logout, me
 
 api = Blueprint("api", __name__)
 
-api.route("/users", methods=["GET"])(index)
+
+
+# Auth routes
+api.route("/auth/register", methods=["POST"])(register)
+api.route("/auth/login", methods=["POST"])(login)
+api.route("/auth/logout", methods=["POST"])(logout)
+api.route("/auth/me", methods=["GET"])(me)

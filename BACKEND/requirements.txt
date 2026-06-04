@@ -3,3 +3,4 @@ python-dotenv
 supabase
 marshmallow
 flask-jwt-extended
+bcrypt
