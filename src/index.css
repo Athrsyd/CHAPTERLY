@@ -17,6 +17,9 @@
 
   --tracking-jauh : 0.5em;
 }
+*{
+  scroll-behavior: smooth;
+}
 
 /* Efek underline hover */
 .nav-link {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { CiSearch } from 'react-icons/ci'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     return (
@@ -16,21 +17,19 @@ const Navbar = () => {
 
                     {/* Navigation Menu */}
                     <div className='flex items-center gap-8 font-jakarta font-semibold'>
-                        <a href='#' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
+                        <a href='#home' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
                             Beranda
                         </a>
-                        <a href='#' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
-                            Buku
-                        </a>
-                        <a href='#' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
+                        <a href='#category' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
                             Kategori
                         </a>
-                        <a href='#' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
+                        <a href='#bookPopular' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
+                            Buku
+                        </a>
+                        <a href='#faq' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
                             Kata Mereka
                         </a>
-                        <a href='#' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
-                            Tentang Kami
-                        </a>
+
                     </div>
 
                     {/* Right Section */}
@@ -41,14 +40,14 @@ const Navbar = () => {
                         </button>
 
                         {/* Login Button */}
-                        <button className='px-4 py-2 border-2 cursor-pointer border-primary text-primary rounded hover:bg-opacity-10 hover:bg-primary transition font-medium text-sm'>
+                        <Link to='/login' className='px-4 py-2 border-2 cursor-pointer border-primary text-primary rounded hover:bg-primary/10 ease-in-out transition font-medium text-sm'>
                             Masuk
-                        </button>
+                        </Link>
 
                         {/* Register Button */}
-                        <button className='px-4 py-2 bg-primary cursor-pointer text-white rounded hover:opacity-90 transition font-medium text-sm'>
+                        <Link to ='/register' className='px-4 py-2 bg-primary cursor-pointer text-white rounded hover:opacity-90 transition font-medium text-sm'>
                             Daftar
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

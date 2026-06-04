@@ -24,12 +24,12 @@ const HeroSection = () => {
 
                         {/* Buttons */}
                         <div className="flex gap-4 mb-12">
-                            <button className="bg-red-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-800 transition">
+                            <a href='#bookPopular' className="bg-red-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-800 transition">
                                 Jelajahi Buku
-                            </button>
-                            <button className="border-2 border-red-900 text-red-900 px-8 py-3 rounded-lg font-semibold hover:bg-red-50 transition">
-                                Cara Kerja
-                            </button>
+                            </a>
+                            <a href='#category' className="border-2 border-red-900 text-red-900 px-8 py-3 rounded-lg font-semibold hover:bg-red-50 transition">
+                                Lihat kategori
+                            </a>
                         </div>
 
                         {/* Stats */}
