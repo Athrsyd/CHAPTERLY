@@ -1,46 +1,36 @@
 import os
-from flask import jsonify
 from flask import Flask
 from flask_jwt_extended import JWTManager
-from flask_cors import CORS
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
-def create_app():
+def create_app() -> Flask:
     app = Flask(__name__)
-    CORS(app, origins="http://localhost:5173") 
-    # Konfigurasi JWT
-    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "ganti-dengan-secret-yang-kuat")
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 60 * 60 * 24  # 1 hari (dalam detik)
 
-    jwt = JWTManager(app)
+    # ── Config ──────────────────────────────────────────────
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "change-me-in-production")
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False  # set timedelta in prod
 
-    # Cek token yang sudah di-revoke (logout)
-    @jwt.token_in_blocklist_loader
-    def check_if_token_revoked(jwt_header, jwt_payload):
-        from app.services.AuthService import AuthService
-        return AuthService.is_token_revoked(jwt_payload)
+    JWTManager(app)
 
-    # Custom error response JWT
-    @jwt.unauthorized_loader
-    def unauthorized_response(callback):
-        return jsonify({"status": "error", "message": "Token tidak ditemukan"}), 401
+    # ── Register blueprints ──────────────────────────────────
+    from app.controllers.auth_controller import auth_bp
+    from app.controllers.book_controller import book_bp
+    from app.controllers.rent_controller import rent_bp
+    from app.controllers.apply_controller import apply_bp
+    from app.controllers.admin_controller import admin_bp
 
-    @jwt.expired_token_loader
-    def expired_token_response(jwt_header, jwt_payload):
-        return jsonify({"status": "error", "message": "Token sudah expired"}), 401
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(book_bp)
+    app.register_blueprint(rent_bp)
+    app.register_blueprint(apply_bp)
+    app.register_blueprint(admin_bp)
 
-    @jwt.invalid_token_loader
-    def invalid_token_response(callback):
-        return jsonify({"status": "error", "message": "Token tidak valid"}), 422
-
-    @jwt.revoked_token_loader
-    def revoked_token_response(jwt_header, jwt_payload):
-        return jsonify({"status": "error", "message": "Token sudah digunakan (logout)"}), 401
-
-    from routes.api import api
-    app.register_blueprint(api, url_prefix="/api")
+    # ── Health check ─────────────────────────────────────────
+    @app.get("/")
+    def health():
+        return {"status": "Chapterly API is running 📚"}
 
     return app
