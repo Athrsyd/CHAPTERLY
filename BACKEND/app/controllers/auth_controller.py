@@ -66,3 +66,19 @@ def login():
 
     user.pop("password", None)
     return success({"token": token, "user": user}, "Login successful")
+
+
+# ── GET /api/auth/me ─────────────────────────────────────────
+@auth_bp.get("/me")
+def me():
+    from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
+    try:
+        verify_jwt_in_request()
+        uid = get_jwt_identity()
+        db = get_supabase()
+        result = db.table("users").select("id, name, email, role").eq("id", uid).execute()
+        if not result.data:
+            return error("User not found", 404)
+        return success(result.data[0])
+    except Exception:
+        return error("Unauthorized", 401)

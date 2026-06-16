@@ -10,7 +10,9 @@ Flask + Supabase backend untuk aplikasi penyewaan buku **Chapterly**.
 chapterly/
 ├── run.py                        # Entry point
 ├── requirements.txt
-├── .env                          # Berisi data rahasia seperti API_KEY database
+├── .env.example                  # Salin ke .env dan isi nilai
+├── migrations/
+│   └── schema.sql                # Jalankan di Supabase SQL Editor
 └── app/
     ├── __init__.py               # App factory (create_app)
     ├── controllers/

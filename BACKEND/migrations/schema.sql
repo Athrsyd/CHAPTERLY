@@ -17,11 +17,12 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS books (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(255)    NOT NULL,
-    cover       TEXT,                           -- URL / path to image
+    cover       TEXT,
     author_id   INT             NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     genre       VARCHAR(100),
     price       DECIMAL(10, 2)  NOT NULL DEFAULT 0,
     rate        INT             NOT NULL DEFAULT 0 CHECK (rate BETWEEN 0 AND 5),
+    stock       INT             NOT NULL DEFAULT 100,
     description TEXT
 );
 
@@ -31,7 +32,7 @@ CREATE TABLE IF NOT EXISTS rent_books (
     user_id     INT             NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     book_id     INT             NOT NULL REFERENCES books(id) ON DELETE CASCADE,
     rent_time   DATE            NOT NULL DEFAULT CURRENT_DATE,
-    UNIQUE (user_id, book_id)   -- prevent duplicate active rents
+    UNIQUE (user_id, book_id)
 );
 
 -- ── 4. HISTORY_RENT ─────────────────────────────────────────
@@ -49,16 +50,10 @@ CREATE TABLE IF NOT EXISTS author_applying (
     status      VARCHAR(10) NOT NULL DEFAULT 'pending'
                 CHECK (status IN ('pending', 'approved', 'rejected')),
     applied_at  TIMESTAMP NOT NULL DEFAULT NOW(),
-    UNIQUE (user_id)    -- one active application per user
+    UNIQUE (user_id)
 );
 
 -- ── SEED: default owner account ─────────────────────────────
--- Password: owner123  (change immediately after setup!)
--- Hash generated with bcrypt rounds=12
-INSERT INTO users (name, email, password, role)
-VALUES (
-    'Super Admin',
-    'owner@chapterly.com',
-    '$2b$12$placeholder_replace_with_real_bcrypt_hash',
-    'owner'
-) ON CONFLICT (email) DO NOTHING;
+-- After running schema, register normally via /api/auth/register
+-- then manually update role to 'owner' with:
+-- UPDATE users SET role = 'owner' WHERE email = 'owner@chapterly.com';

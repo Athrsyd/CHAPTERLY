@@ -4,10 +4,10 @@ import logoPutih from '../../assets/logoputih.png'
 
 const FooterSection = () => {
     return (
-        <footer>
+        <footer >
             
             {/* Wave Decoration */}
-            <div className="relative h-24 bg-linear-to-br from-pink to-pink bg-opacity-50">
+            <div className="relative h-24 w-full bg-linear-to-br from-pink to-pink bg-opacity-50">
                 <svg
                     className="absolute bottom-0 left-0 w-full h-full"
                     viewBox="0 0 1440 120"

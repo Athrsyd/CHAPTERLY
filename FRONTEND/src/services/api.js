@@ -13,19 +13,11 @@ api.interceptors.request.use((config) => {
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
+    // Jika data adalah FormData, hapus Content-Type agar axios set boundary otomatis
+    if (config.data instanceof FormData) {
+        delete config.headers["Content-Type"];
+    }
     return config;
 });
-
-// Handle 401 → redirect ke login
-api.interceptors.response.use(
-    (res) => res,
-    (err) => {
-        if (err.response?.status === 401) {
-            localStorage.removeItem("access_token");
-            window.location.href = "/login";
-        }
-        return Promise.reject(err);
-    }
-);
 
 export default api;

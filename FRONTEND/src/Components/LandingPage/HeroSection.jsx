@@ -1,8 +1,14 @@
 import React from 'react'
 import { MdMenuBook, MdGroup, MdLibraryBooks } from 'react-icons/md'
 import hero from '../../assets/bukuhero.png'
+import { motion } from 'framer-motion'
 
 const HeroSection = () => {
+    const transition = {
+        duration: 0.8,
+        delay: 0.5,
+        ease: [0, 0.71, 0.2, 1.01],
+    }
     return (
         <section className="w-full bg-[#EFEBE9] overflow-hidden z-10 relative">
             <div className="container mx-auto px-6 py-20">
@@ -19,7 +25,7 @@ const HeroSection = () => {
 
                         {/* Subtitle */}
                         <p className="text-gray-600 text-xl mb-8 leading-relaxed font-jakarta">
-                            Sewa buku digital favorit mu dan nikmati pengalaman membaca yang praktis, kapan saja dan di mana saja.
+                            Perpustakaan digital untuk penulis dan pembaca. Temukan, baca, dan bagikan cerita favoritmu di Chapterly.
                         </p>
 
                         {/* Buttons */}
@@ -74,13 +80,15 @@ const HeroSection = () => {
                     </div>
 
                     {/* Right Image */}
-                    <div className="flex naik-turun justify-center items-center absolute right-20">
-                        <img 
+                    <motion.div
+                        animate={{ x: 100 }}
+                        transition={transition} className="flex naik-turun justify-center items-center absolute right-20">
+                        <img
                             src={hero}
-                            alt="Hero Books" 
+                            alt="Hero Books"
                             className="w-125 drop-shadow-lg"
                         />
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

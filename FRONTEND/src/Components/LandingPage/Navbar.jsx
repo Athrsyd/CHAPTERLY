@@ -6,7 +6,7 @@ const Navbar = () => {
 
     const token = localStorage.getItem('access_token')
     return (
-        <nav className='w-full  z-9999 fixed bg-white border-b rounded-b-4xl shadow-lg border-gray-200'>
+        <nav className='w-full z-9999 fixed bg-white border-b rounded-b-4xl shadow-lg border-gray-200'>
             <div className='max-w-7xl mx-auto px-5 py-4'>
                 <div className='flex items-center justify-between'>
                     {/* Logo */}

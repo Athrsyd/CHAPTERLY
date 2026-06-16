@@ -1,6 +1,7 @@
 import os
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,9 +12,27 @@ def create_app() -> Flask:
 
     # ── Config ──────────────────────────────────────────────
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "change-me-in-production")
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False  # set timedelta in prod
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False
 
     JWTManager(app)
+
+    # ── CORS ─────────────────────────────────────────────────
+    CORS(app,
+         resources={r"/*": {"origins": "*"}},
+         allow_headers=["Content-Type", "Authorization"],
+         methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+         supports_credentials=False)
+
+    # Handle OPTIONS preflight untuk semua route
+    @app.before_request
+    def handle_preflight():
+        if request.method == "OPTIONS":
+            res = jsonify({"status": "ok"})
+            res.headers["Access-Control-Allow-Origin"] = request.headers.get("Origin", "*")
+            res.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+            res.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+            res.headers["Access-Control-Max-Age"] = "86400"
+            return res, 200
 
     # ── Register blueprints ──────────────────────────────────
     from app.controllers.auth_controller import auth_bp

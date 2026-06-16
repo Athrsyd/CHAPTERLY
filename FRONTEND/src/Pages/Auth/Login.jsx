@@ -22,8 +22,11 @@ export default function Login() {
         setLoading(true);
         setError("");
         try {
-            await login(formData.email, formData.password);
-            navigate("/");
+            const res = await login(formData.email, formData.password);
+            const role = res.data.user.role;
+            if (role === 'owner') navigate("/superadmin/dashboard");
+            else if (role === 'author') navigate("/admin/dashboard");
+            else navigate("/dashboard");
         } catch (err) {
             setError(err.response?.data?.message || "Login gagal, coba lagi");
         } finally {
@@ -63,12 +66,8 @@ export default function Login() {
                     <div className="flex flex-col gap-1.5 mb-4">
                         <label className="text-white text-sm">Email</label>
                         <input
-                            type="email"
-                            name="email"
-                            placeholder="Enter your email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
+                            type="email" name="email" placeholder="Enter your email"
+                            value={formData.email} onChange={handleChange} required
                             className="rounded-xl px-4 py-3.5 text-sm text-white/75 placeholder-white/40 outline-none w-full"
                             style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.35)" }}
                         />
@@ -77,23 +76,16 @@ export default function Login() {
                     <div className="flex flex-col gap-1.5 mb-5">
                         <label className="text-white text-sm">Password</label>
                         <input
-                            type="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
+                            type="password" name="password" placeholder="Enter your password"
+                            value={formData.password} onChange={handleChange} required
                             className="rounded-xl px-4 py-3.5 text-sm text-white/75 placeholder-white/40 outline-none w-full"
                             style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.35)" }}
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
+                    <button type="submit" disabled={loading}
                         className="w-full rounded-2xl py-4 text-base font-bold tracking-widest cursor-pointer mb-5 disabled:opacity-60"
-                        style={{ backgroundColor: "#F5F0E8", color: "#6B0C0C" }}
-                    >
+                        style={{ backgroundColor: "#F5F0E8", color: "#6B0C0C" }}>
                         {loading ? "LOADING..." : "SIGN IN"}
                     </button>
                 </form>
@@ -105,22 +97,14 @@ export default function Login() {
                 </div>
 
                 <div className="flex justify-center gap-7 mb-7">
-                    <button aria-label="Facebook" className="bg-transparent border-none cursor-pointer">
-                        <FaFacebook size={26} color="white" />
-                    </button>
-                    <button aria-label="Google" className="bg-transparent border-none cursor-pointer">
-                        <FaGoogle size={26} color="white" />
-                    </button>
-                    <button aria-label="Instagram" className="bg-transparent border-none cursor-pointer">
-                        <FaInstagram size={26} color="white" />
-                    </button>
+                    <button aria-label="Facebook" className="bg-transparent border-none cursor-pointer"><FaFacebook size={26} color="white" /></button>
+                    <button aria-label="Google" className="bg-transparent border-none cursor-pointer"><FaGoogle size={26} color="white" /></button>
+                    <button aria-label="Instagram" className="bg-transparent border-none cursor-pointer"><FaInstagram size={26} color="white" /></button>
                 </div>
 
                 <p className="text-center text-white text-xs font-semibold tracking-wide">
                     DON'T HAVE AN ACCOUNT?{" "}
-                    <Link to="/register" className="cursor-pointer font-bold tracking-widest" style={{ color: "#F5F0E8" }}>
-                        REGISTER
-                    </Link>
+                    <Link to="/register" className="cursor-pointer font-bold tracking-widest" style={{ color: "#F5F0E8" }}>REGISTER</Link>
                 </p>
             </div>
         </div>
