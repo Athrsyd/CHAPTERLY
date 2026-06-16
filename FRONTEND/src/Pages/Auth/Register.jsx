@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaFacebook, FaGoogle, FaInstagram, FaArrowLeft } from "react-icons/fa";
+import { FaFacebook, FaGoogle, FaInstagram, FaArrowLeft, FaEyeSlash, FaEye } from "react-icons/fa";
 import Decor from '../../assets/asoy.png';
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
@@ -11,6 +11,7 @@ export default function Register() {
     const [formData, setFormData] = useState({ name: "", email: "", password: "" });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [seePassword, setSeePassword] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,6 +22,7 @@ export default function Register() {
         e.preventDefault();
         setLoading(true);
         setError("");
+        setSeePassword(false);
         try {
             await register(formData.name, formData.email, formData.password);
             navigate("/login");
@@ -42,8 +44,7 @@ export default function Register() {
             <button
                 onClick={() => navigate(-1)}
                 aria-label="Kembali"
-                className="absolute top-4 left-4 z-999 flex items-center justify-center w-9 h-9 rounded-full cursor-pointer transition-colors duration-200 hover:bg-white/20"
-                style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.25)" }}
+                className="absolute top-4 left-8 z-999 flex items-center justify-center bg-primary w-9 h-9 rounded-full cursor-pointer transition duration-200 hover:-translate-x-1 hover:bg-primary/90"
             >
                 <FaArrowLeft size={15} color="white" />
             </button>
@@ -96,16 +97,25 @@ export default function Register() {
 
                     <div className="flex flex-col gap-1.5 mb-5">
                         <label className="text-white text-sm">Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            className="rounded-xl px-4 py-3.5 text-sm text-white/75 placeholder-white/40 outline-none w-full"
-                            style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.35)" }}
-                        />
+                        <div className="relative">
+                            <input
+                                type={seePassword ? "text" : "password"}
+                                name="password"
+                                placeholder="Enter your password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                className="rounded-xl px-4 py-3.5 text-sm text-white/75 placeholder-white/40 outline-none w-full"
+                                style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1.5px solid rgba(255,255,255,0.35)" }}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setSeePassword(!seePassword)}
+                                className="absolute right-5 top-4.5 text-white/75"
+                            >
+                                {seePassword ? <FaEye /> : <FaEyeSlash />}
+                            </button>
+                        </div>
                     </div>
 
                     <button
