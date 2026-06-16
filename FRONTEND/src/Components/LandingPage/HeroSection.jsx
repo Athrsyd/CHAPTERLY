@@ -14,7 +14,7 @@ const HeroSection = () => {
             <div className="container mx-auto px-6 py-20">
                 <div className="grid grid-cols-2 gap-12 items-center">
                     {/* Left Content */}
-                    <div className="flex flex-col justify-center ml-8">
+                    <div className="flex flex-col justify-center ml-16">
                         {/* Heading */}
                         <h1 className="text-4xl font-bold mb-4 leading-tight font-ebgaramond">
                             Every <br />
