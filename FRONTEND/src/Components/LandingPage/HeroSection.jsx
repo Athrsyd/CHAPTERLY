@@ -16,7 +16,7 @@ const HeroSection = () => {
                     {/* Left Content */}
                     <div className="flex flex-col justify-center">
                         {/* Heading */}
-                        <h1 className="text-6xl font-bold mb-4 leading-tight font-ebgaramond">
+                        <h1 className="text-4xl font-bold mb-4 leading-tight font-ebgaramond">
                             Every <br />
                             <span className="text-red-900">Chapter</span>
                             <br />
@@ -85,7 +85,7 @@ const HeroSection = () => {
                         <img
                             src={hero}
                             alt="Hero Books"
-                            className="w-125 drop-shadow-lg"
+                            className="w-115 drop-shadow-lg"
                         />
                     </div>
                 </div>
