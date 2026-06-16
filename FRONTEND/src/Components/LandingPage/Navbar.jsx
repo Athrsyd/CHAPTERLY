@@ -7,15 +7,17 @@ const Navbar = () => {
     const token = localStorage.getItem('access_token')
     return (
         <nav className='w-full z-9999 fixed bg-white border-b rounded-b-4xl shadow-lg border-gray-200'>
-            <div className='max-w-7xl mx-auto px-5 py-4'>
+            <div className='max-w-7xl mx-auto px-16 py-4'>
                 <div className='flex items-center justify-between'>
                     {/* Logo */}
-                    <div className='flex items-center gap-2'>
-                        {/* <div className='w-8 h-8 bg-primary rounded-full flex items-center justify-center'> */}
-                        <img src="/LogoFix.svg" alt="" srcset="" className='w-16 h-16' />
-                        {/* </div> */}
-                        <span className='text-2xl font-bold font-ebgaramond tracking-jauh text-primary'>CHAPTERLY</span>
-                    </div>
+                    <a href="">
+                        <div className='flex items-center gap-2'>
+                            {/* <div className='w-8 h-8 bg-primary rounded-full flex items-center justify-center'> */}
+                            <img src="/LogoFix.svg" alt="" srcset="" className='w-16 h-16' />
+                            {/* </div> */}
+                            <span className='text-2xl font-bold font-ebgaramond tracking-jauh text-primary'>CHAPTERLY</span>
+                        </div>
+                    </a>
 
                     {/* Navigation Menu */}
                     <div className='flex items-center gap-8 font-jakarta font-semibold'>

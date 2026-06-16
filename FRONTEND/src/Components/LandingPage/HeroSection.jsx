@@ -1,7 +1,7 @@
 import React from 'react'
 import { MdMenuBook, MdGroup, MdLibraryBooks } from 'react-icons/md'
 import hero from '../../assets/bukuhero.png'
-import { motion } from 'framer-motion'
+
 
 const HeroSection = () => {
     const transition = {
@@ -80,15 +80,14 @@ const HeroSection = () => {
                     </div>
 
                     {/* Right Image */}
-                    <motion.div
-                        animate={{ x: 100 }}
-                        transition={transition} className="flex naik-turun justify-center items-center absolute right-20">
+                    <div
+                        className="flex naik-turun justify-center items-center absolute right-20">
                         <img
                             src={hero}
                             alt="Hero Books"
                             className="w-125 drop-shadow-lg"
                         />
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
