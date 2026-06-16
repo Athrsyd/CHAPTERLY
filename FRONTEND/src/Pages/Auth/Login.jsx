@@ -48,7 +48,7 @@ export default function Login() {
             <img src={Decor} alt="" className="h-screen w-280 absolute z-20 left-0" />
 
             <div
-                className="w-full mr-48 relative z-30 max-w-lg rounded-3xl px-9 py-5 flex flex-col"
+                className="w-full mr-24 relative z-30 max-w-lg rounded-3xl px-9 py-5 flex flex-col"
                 style={{ backgroundColor: "#6B0C0C" }}
             >
                 <h1 className="text-white text-2xl font-extrabold text-center tracking-widest mb-7">
