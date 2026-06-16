@@ -1,68 +1,96 @@
 import React from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { Link } from 'react-router-dom'
+import { motion } from 'motion/react'
 
 const Navbar = () => {
-
     const token = localStorage.getItem('access_token')
+
+    const navLinks = [
+        { href: '#home', label: 'Beranda' },
+        { href: '#category', label: 'Kategori' },
+        { href: '#bookPopular', label: 'Buku' },
+        { href: '#faq', label: 'Kata Mereka' },
+    ]
+
     return (
-        <nav className='w-full z-9999 fixed bg-white border-b rounded-b-4xl shadow-lg border-gray-200'>
+        <motion.nav
+            className='w-full z-9999 fixed bg-white border-b rounded-b-4xl shadow-lg border-gray-200'
+            initial={{ y: -80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
             <div className='max-w-7xl mx-auto px-16 py-4'>
                 <div className='flex items-center justify-between'>
                     {/* Logo */}
-                    <a href="">
+                    <motion.a
+                        href=""
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    >
                         <div className='flex items-center gap-2'>
-                            {/* <div className='w-8 h-8 bg-primary rounded-full flex items-center justify-center'> */}
-                            <img src="/LogoFix.svg" alt="" srcset="" className='w-16 h-16' />
-                            {/* </div> */}
+                            <img src="/LogoFix.svg" alt="" className='w-16 h-16' />
                             <span className='text-2xl font-bold font-ebgaramond tracking-jauh text-primary'>CHAPTERLY</span>
                         </div>
-                    </a>
+                    </motion.a>
 
                     {/* Navigation Menu */}
                     <div className='flex items-center gap-8 font-jakarta font-semibold'>
-                        <a href='#home' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
-                            Beranda
-                        </a>
-                        <a href='#category' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
-                            Kategori
-                        </a>
-                        <a href='#bookPopular' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
-                            Buku
-                        </a>
-                        <a href='#faq' className='nav-link text-black transition-all ease-in-out duration-300 hover:text-primary font-medium text-sm'>
-                            Kata Mereka
-                        </a>
-
+                        {navLinks.map((link, i) => (
+                            <motion.a
+                                key={link.href}
+                                href={link.href}
+                                className='nav-link text-black font-medium text-sm relative'
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
+                                whileHover={{ color: 'var(--color-primary)', y: -2 }}
+                            >
+                                {link.label}
+                            </motion.a>
+                        ))}
                     </div>
 
                     {/* Right Section */}
-                    <div className='flex items-center gap-6'>
-                        {/* Search Icon */}
-                        <button className='text-gray-600 cursor-pointer hover:text-gray-800 transition'>
+                    <motion.div
+                        className='flex items-center gap-6'
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.45 }}
+                    >
+                        <motion.button
+                            className='text-gray-600 cursor-pointer hover:text-gray-800 transition'
+                            whileHover={{ scale: 1.2, rotate: 5 }}
+                            whileTap={{ scale: 0.9 }}
+                        >
                             <CiSearch size={24} />
-                        </button>
+                        </motion.button>
 
-                        {/* Login Button */}
-
-                        {token ? <Link to='/dashboard' className='px-4 py-2 bg-primary cursor-pointer text-white rounded hover:opacity-90 transition font-medium text-sm'>
-                            Dashboard
-                        </Link> : (
+                        {token ? (
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                                <Link to='/dashboard' className='px-4 py-2 bg-primary cursor-pointer text-white rounded hover:opacity-90 transition font-medium text-sm'>
+                                    Dashboard
+                                </Link>
+                            </motion.div>
+                        ) : (
                             <>
-                                <Link to='/login' className='px-4 py-2 border-2 cursor-pointer border-primary text-primary rounded hover:bg-primary/10 ease-in-out transition font-medium text-sm'>
-                                    Masuk
-                                </Link>
-
-                                <Link to='/register' className='px-4 py-2 bg-primary cursor-pointer text-white rounded hover:opacity-90 transition font-medium text-sm'>
-                                    Daftar
-                                </Link>
+                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                                    <Link to='/login' className='px-4 py-2 border-2 cursor-pointer border-primary text-primary rounded hover:bg-primary/10 ease-in-out transition font-medium text-sm'>
+                                        Masuk
+                                    </Link>
+                                </motion.div>
+                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                                    <Link to='/register' className='px-4 py-2 bg-primary cursor-pointer text-white rounded hover:opacity-90 transition font-medium text-sm'>
+                                        Daftar
+                                    </Link>
+                                </motion.div>
                             </>
-                        )
-                        }
-                    </div>
+                        )}
+                    </motion.div>
                 </div>
             </div>
-        </nav>
+        </motion.nav>
     )
 }
 
